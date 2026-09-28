@@ -372,6 +372,7 @@ local EmbeddedModules = {
 				return
 			end
 			RT.aimRequired = S.FovVisible and S.FovRadius or 2000
+			RT.aimRequired3D = 10000	
 			local ml = UserInputService:GetMouseLocation()
 			local lt = LocalPlayer[DEVELOPER.TeamCheckOption]
 			for _,p in Players:GetPlayers() do
@@ -512,7 +513,6 @@ local EmbeddedModules = {
 			if o.hpBar then o.hpBar.Visible=false end
 		end
 		local function updateEspFrame()
-            if not S.EspEnabled then return end
             for p,o in EspObjects do
 				local c=p.Character
 				local active=S.EspEnabled and c
@@ -585,12 +585,12 @@ local EmbeddedModules = {
 		end)
 
 		connect(RunService[DEVELOPER.UpdateMode],function()
-            updateTriggerbot()
-            if S.TracerEnabled and S.AimbotEnabled then updateTracer() end
-            if S.FovVisible and S.AimbotEnabled then updateFov() end
-            if RT.aimRunning and S.AimbotEnabled then updateAim() end
-            if S.EspEnabled then updateEspFrame() end
-        end)
+		    updateTriggerbot()
+		    updateTracer()
+		    updateFov()
+		    if RT.aimRunning and S.AimbotEnabled then updateAim() end
+		    updateEspFrame()
+		end)
 
 		-- ===================================================
 		--  CONFIG APPLY
